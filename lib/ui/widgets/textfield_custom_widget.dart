@@ -1,12 +1,20 @@
 import 'package:codigo2_alerta/ui/general/colors.dart';
 import 'package:codigo2_alerta/ui/widgets/general_widget.dart';
+import 'package:codigo2_alerta/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldCustomWidget extends StatelessWidget {
+  String label;
+  String hintText;
   TextEditingController controller;
+  InputTypeEnum? inputTypeEnum;
 
   TextFieldCustomWidget({
     required this.controller,
+    required this.label,
+    required this.hintText,
+    this.inputTypeEnum,
   });
 
   @override
@@ -15,7 +23,7 @@ class TextFieldCustomWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Tu número de DNI",
+          label,
           style: TextStyle(
             fontSize: 14.0,
             fontWeight: FontWeight.bold,
@@ -25,12 +33,23 @@ class TextFieldCustomWidget extends StatelessWidget {
         spacing10,
         TextFormField(
           controller: controller,
+          keyboardType: inputTypeMap[inputTypeEnum],
+          maxLength: inputTypeEnum == InputTypeEnum.dni ? 8 : null,
+          inputFormatters: inputTypeEnum == InputTypeEnum.dni ||
+                  inputTypeEnum == InputTypeEnum.telefono
+              ? [
+                  FilteringTextInputFormatter.allow(
+                    RegExp("[0-9]"),
+                  ),
+                ]
+              : [],
           style: TextStyle(
             color: kFontPrimaryColor.withOpacity(0.80),
             fontSize: 14.0,
           ),
           decoration: InputDecoration(
-            hintText: "Ingrese su DNI",
+            counter: const SizedBox(),
+            hintText: hintText,
             hintStyle: TextStyle(
               fontSize: 14.0,
               color: kFontPrimaryColor.withOpacity(0.5),
@@ -51,7 +70,30 @@ class TextFieldCustomWidget extends StatelessWidget {
                 width: 0.9,
               ),
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(
+                color: kFontPrimaryColor.withOpacity(0.12),
+                width: 0.9,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(
+                color: kFontPrimaryColor.withOpacity(0.12),
+                width: 0.9,
+              ),
+            ),
           ),
+          validator: (String? value) {
+            if (value != null && value.isEmpty) {
+              return "Campo obligatorio";
+            }
+            if (inputTypeEnum == InputTypeEnum.dni && value!.length < 8) {
+              return "Ingrese 8 digitos";
+            }
+            return null;
+          },
         ),
       ],
     );
@@ -125,7 +167,27 @@ class _TextFieldCustomPasswordWidgetState
                 width: 0.9,
               ),
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(
+                color: kFontPrimaryColor.withOpacity(0.12),
+                width: 0.9,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(
+                color: kFontPrimaryColor.withOpacity(0.12),
+                width: 0.9,
+              ),
+            ),
           ),
+          validator: (String? value) {
+            if (value != null && value.isEmpty) {
+              return "Campo obligatorio";
+            }
+            return null;
+          },
         ),
       ],
     );
