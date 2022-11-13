@@ -1,5 +1,6 @@
 import 'package:codigo2_alerta/ui/general/colors.dart';
 import 'package:codigo2_alerta/ui/pages/citizen_page.dart';
+import 'package:codigo2_alerta/ui/pages/incident_page.dart';
 import 'package:codigo2_alerta/ui/pages/incident_type_page.dart';
 import 'package:codigo2_alerta/ui/widgets/general_widget.dart';
 import 'package:codigo2_alerta/ui/widgets/item_menu_widget.dart';
@@ -57,7 +58,14 @@ class HomePage extends StatelessWidget {
                       color: Color(0xffffba08),
                       icon: Icons.add_alert,
                       text: "Incidentes",
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => IncidentPage(),
+                          ),
+                        );
+                      },
                     ),
                     ItemMenuWidget(
                       color: Color(0xff00509d),

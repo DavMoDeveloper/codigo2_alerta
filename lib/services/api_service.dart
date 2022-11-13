@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:codigo2_alerta/models/citizen_model.dart';
+import 'package:codigo2_alerta/models/incident_model.dart';
+import 'package:codigo2_alerta/models/incident_register_model.dart';
 import 'package:codigo2_alerta/models/incident_type_model.dart';
 import 'package:codigo2_alerta/models/user_model.dart';
 import 'package:codigo2_alerta/ui/pages/incident_type_page.dart';
@@ -51,5 +53,41 @@ class ApiService {
       return incidentTypeList;
     }
     return [];
+  }
+
+  getIncident() async {
+    Uri _url = Uri.parse("$pathProduction/incidentes/");
+    http.Response response = await http.get(_url);
+    if(response.statusCode == 200) {
+      List listData = json.decode(response.body);
+      List<IncidentModel> incidentList = listData.map((e) => IncidentModel.fromJson(e)).toList();
+      return incidentList;
+    }
+    return [];
+
+  }
+
+  
+  Future<bool> registerIncident(IncidentRegisterModel model) async {
+    Uri _url = Uri.parse("$pathProduction/incidentes/crear/");
+    http.Response response = await http.post(
+      _url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token 51e15412d68b8458f3aef7c5328d4e2d34a59d5f",
+      },
+      body: json.encode(
+        {
+          "latitud": model.latitude,
+          "longitud": model.longitude,
+          "tipoIncidente": model.incidentTypeId,
+          "estado": model.status
+        },
+      ),
+    );
+    if(response.statusCode == 201){
+      return true;
+    }
+    return false;
   }
 }
