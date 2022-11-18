@@ -8,6 +8,9 @@
         android:label="codigo2_alerta"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyA836d24tDG5Mcd_lh6FSmKk1tFpCkkces"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

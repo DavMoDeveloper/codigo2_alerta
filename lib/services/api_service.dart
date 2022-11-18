@@ -85,9 +85,10 @@ class ApiService {
         },
       ),
     );
-    if(response.statusCode == 201){
-      return true;
-    }
-    return false;
+    // if(response.statusCode == 201){
+    //   return true;
+    // }
+    // return false;
+    return response.statusCode == 201;
   }
 }
