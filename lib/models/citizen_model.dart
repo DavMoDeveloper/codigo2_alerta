@@ -1,3 +1,4 @@
+
 class CitizenModel {
   CitizenModel({
     required this.id,
@@ -19,7 +20,7 @@ class CitizenModel {
 
   factory CitizenModel.fromJson(Map<String, dynamic> json) => CitizenModel(
     id: json["id"],
-    fullName: json["nombreCompleto"],
+    fullName: json["nombreCompleto"] ?? "-",
     phone: json["telefono"],
     address: json["direccion"],
     dni: json["dni"],
